@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "dev.samu.tareas"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "dev.samu.tareas"
