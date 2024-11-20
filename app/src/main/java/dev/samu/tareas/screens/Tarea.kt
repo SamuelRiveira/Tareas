@@ -9,9 +9,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import dev.samu.tareas.viewmodel.TaskViewModel
 
 @Composable
-fun Tarea(navController: NavHostController) {
+fun Tarea(navController: NavHostController, taskViewModel: TaskViewModel) {
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
