@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
@@ -16,10 +16,13 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import dev.samu.tareas.data.Task
@@ -28,20 +31,16 @@ import dev.samu.tareas.viewmodel.TaskViewModel
 
 @Composable
 fun ListaTareas(navController: NavHostController, taskViewModel: TaskViewModel) {
+    var indiceTarea by remember { mutableStateOf(0) }
     Box{
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxSize()
         ) {
-            Button(onClick = {
-                taskViewModel.addTask(Task(title = "Nueva Tarea", content = "Contenido de prueba"))
-            }) {
-                Text(text = "Agregar tarea")
-            }
-
             LazyColumn {
-                items(taskViewModel.task) { task ->
+                itemsIndexed(taskViewModel.task) { index,task ->
+                    indiceTarea = index
                     Column(modifier = Modifier.fillMaxWidth().padding(8.dp)) {
                         Text(text = "Título: ${task.title}")
                         Text(text = "Contenido: ${task.content}")
@@ -66,7 +65,8 @@ fun ListaTareas(navController: NavHostController, taskViewModel: TaskViewModel) 
         }
         FloatingActionButton(
             onClick = {
-
+                taskViewModel.addTask(Task(title = "Nueva Tarea", content = ""))
+                navController.navigate(route = AppScreens.Tarea.route + "/${indiceTarea}")
             },
             containerColor = Color(0xffFFA500),
             contentColor = Color.White,
