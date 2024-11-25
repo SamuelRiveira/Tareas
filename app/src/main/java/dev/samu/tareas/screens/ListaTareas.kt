@@ -1,17 +1,17 @@
 package dev.samu.tareas.screens
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.Button
+import androidx.compose.material3.Card
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -34,39 +34,53 @@ fun ListaTareas(navController: NavHostController, taskViewModel: TaskViewModel) 
     var indiceTarea by remember { mutableStateOf(0) }
     Box{
         Column(
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize().padding(8.dp).padding(top = 16.dp)
         ) {
-            LazyColumn {
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2)
+            ) {
                 itemsIndexed(taskViewModel.task) { index,task ->
                     indiceTarea = index
-                    Column(modifier = Modifier.fillMaxWidth().padding(8.dp)) {
-                        Text(text = "Título: ${task.title}")
-                        Text(text = "Contenido: ${task.content}")
-                        Row {
-                            Button(onClick = { taskViewModel.deleteTask(task) }) {
-                                Text(text = "Eliminar")
+//                    Column(modifier = Modifier.fillMaxWidth().padding(8.dp)) {
+//                        Text(text = "Título: ${task.title}")
+//                        Text(text = "Contenido: ${task.content}")
+//                        Row {
+//                            Button(onClick = { taskViewModel.deleteTask(task) }) {
+//                                Text(text = "Eliminar")
+//                            }
+//                            Button(onClick = {
+//                                val updatedTask = task.copy(content = "Contenido actualizado")
+//                                taskViewModel.updateTask(updatedTask)
+//                            }) {
+//                                Text(text = "Editar")
+//                            }
+//                        }
+//                    }
+                    Column(modifier = Modifier){
+                        Card(
+                            modifier = Modifier
+                                .padding(8.dp)
+                                .height(150.dp)
+                                .width(200.dp),
+                            onClick = {
+                                navController.navigate(route = AppScreens.Tarea.route + "/${index}")
                             }
-                            Button(onClick = {
-                                val updatedTask = task.copy(content = "Contenido actualizado")
-                                taskViewModel.updateTask(updatedTask)
-                            }) {
-                                Text(text = "Editar")
+                        ) {
+                            Column(
+                                modifier = Modifier.padding(16.dp)
+                            ) {
+                                Text(text = "Título: ${task.title}")
+                                Text(text = "Contenido: ${task.content}")
                             }
                         }
                     }
                 }
             }
-
-            Button(onClick = { navController.navigate(route = AppScreens.Tarea.route) }) {
-                Text(text = "Ir a la segunda pantalla")
-            }
         }
         FloatingActionButton(
             onClick = {
                 taskViewModel.addTask(Task(title = "Nueva Tarea", content = ""))
-                navController.navigate(route = AppScreens.Tarea.route + "/${indiceTarea}")
+                navController.navigate(route = AppScreens.Tarea.route + "/${indiceTarea + 1}")
             },
             containerColor = Color(0xffFFA500),
             contentColor = Color.White,
