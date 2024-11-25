@@ -1,5 +1,7 @@
 package dev.samu.tareas.screens
 
+import android.R
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,6 +14,8 @@ import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardColors
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -23,7 +27,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import dev.samu.tareas.data.Task
 import dev.samu.tareas.navigation.AppScreens
@@ -32,10 +38,19 @@ import dev.samu.tareas.viewmodel.TaskViewModel
 @Composable
 fun ListaTareas(navController: NavHostController, taskViewModel: TaskViewModel) {
     var indiceTarea by remember { mutableStateOf(0) }
-    Box{
+    Box(
+        modifier = Modifier.background(Color.Black)
+    ){
         Column(
             modifier = Modifier.fillMaxSize().padding(8.dp).padding(top = 16.dp)
         ) {
+            Text(
+                text = "Tareas",
+                fontSize = 30.sp,
+                color = Color(0xffc5c5c5),
+                modifier = Modifier
+                    .padding(start = 8.dp)
+            )
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2)
             ) {
@@ -62,6 +77,9 @@ fun ListaTareas(navController: NavHostController, taskViewModel: TaskViewModel) 
                                 .padding(8.dp)
                                 .height(150.dp)
                                 .width(200.dp),
+                            colors = CardDefaults.cardColors(
+                                containerColor = Color(0xff242424),
+                            ),
                             onClick = {
                                 navController.navigate(route = AppScreens.Tarea.route + "/${index}")
                             }
@@ -69,8 +87,18 @@ fun ListaTareas(navController: NavHostController, taskViewModel: TaskViewModel) 
                             Column(
                                 modifier = Modifier.padding(16.dp)
                             ) {
-                                Text(text = "Título: ${task.title}")
-                                Text(text = "Contenido: ${task.content}")
+                                Text(
+                                    text = "${task.title}",
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 18.sp,
+                                    color = Color.White,
+                                    modifier = Modifier
+                                        .padding(bottom = 8.dp)
+                                )
+                                Text(
+                                    text = "${task.content}",
+                                    color = Color(0xff828282)
+                                )
                             }
                         }
                     }
