@@ -45,6 +45,11 @@ import dev.samu.tareas.navigation.AppScreens
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Tarea(navController: NavHostController, taskViewModel: TaskViewModel, indice: Int?) {
+    // Inicializar variables de estado con valores de la tarea seleccionada
+    val selectedTask = indice?.let { taskViewModel.task.getOrNull(it) }
+    var textoTitulo by remember { mutableStateOf(selectedTask?.title ?: "") }
+    var textoContenido by remember { mutableStateOf(selectedTask?.content ?: "") }
+
     Column(
         modifier = Modifier
             .background(Color.Black)
@@ -57,7 +62,7 @@ fun Tarea(navController: NavHostController, taskViewModel: TaskViewModel, indice
                 }) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "Localized description",
+                        contentDescription = "Volver atrás",
                         tint = Color.White
                     )
                 }
@@ -71,32 +76,29 @@ fun Tarea(navController: NavHostController, taskViewModel: TaskViewModel, indice
             ),
             actions = {
                 IconButton(onClick = {
-                    taskViewModel.task.forEachIndexed{ index, task ->
-                        if((indice != null) && (indice == index)){
-                            taskViewModel.deleteTask(task)
-                            navController.navigate(route = AppScreens.ListaTareas.route)
-                        }
+                    selectedTask?.let { task ->
+                        taskViewModel.deleteTask(task)
+                        navController.navigate(route = AppScreens.ListaTareas.route)
                     }
                 }) {
                     Icon(
                         painter = painterResource(R.drawable.eliminar),
-                        contentDescription = "Localized description",
+                        contentDescription = "Eliminar",
                         tint = Color.White,
                         modifier = Modifier
                             .size(24.dp)
                     )
                 }
                 IconButton(onClick = {
-                    taskViewModel.task.forEachIndexed{ index, task ->
-                        if((indice != null) && (indice == index)){
-                            taskViewModel.deleteTask(task)
-                            navController.navigate(route = AppScreens.ListaTareas.route)
-                        }
+                    selectedTask?.let { task ->
+                        val updatedTask = task.copy(title = textoTitulo, content = textoContenido)
+                        taskViewModel.updateTask(updatedTask)
+                        navController.popBackStack()
                     }
                 }) {
                     Icon(
-                        painter = painterResource(R.drawable.eliminar),
-                        contentDescription = "Localized description",
+                        painter = painterResource(R.drawable.editar),
+                        contentDescription = "Editar",
                         tint = Color.White,
                         modifier = Modifier
                             .size(24.dp)
@@ -105,13 +107,12 @@ fun Tarea(navController: NavHostController, taskViewModel: TaskViewModel, indice
             }
         )
         LazyColumn {
-            itemsIndexed(taskViewModel.task) { index,task ->
-                var textoTitulo by remember { mutableStateOf(task.title) }
-                var textoContenido by remember { mutableStateOf(task.content) }
-
-                if((indice != null) && (indice == index))
-                    Column(modifier = Modifier
-                        .fillMaxWidth()
+            itemsIndexed(taskViewModel.task) { index, task ->
+                if (indice != null && indice == index) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 16.dp, bottom = 16.dp)
                     ) {
                         TextField(
                             value = textoTitulo,
@@ -126,8 +127,6 @@ fun Tarea(navController: NavHostController, taskViewModel: TaskViewModel, indice
                                 focusedIndicatorColor = Color.Transparent,
                                 unfocusedIndicatorColor = Color.Transparent
                             ),
-                            modifier = Modifier
-                                .padding(start = 16.dp, bottom = 16.dp)
                         )
                         TextField(
                             value = textoContenido,
@@ -141,24 +140,9 @@ fun Tarea(navController: NavHostController, taskViewModel: TaskViewModel, indice
                                 focusedIndicatorColor = Color.Transparent,
                                 unfocusedIndicatorColor = Color.Transparent
                             ),
-                            modifier = Modifier
-                                .padding(start = 16.dp, bottom = 16.dp)
                         )
-//                Row {
-//                    Button(onClick = {
-//                        taskViewModel.deleteTask(task)
-//                        navController.navigate(route = AppScreens.ListaTareas.route)
-//                    }) {
-//                        Text(text = "Eliminar")
-//                    }
-//                    Button(onClick = {
-//                        val updatedTask = task.copy(content = "Contenido actualizado")
-//                        taskViewModel.updateTask(updatedTask)
-//                    }) {
-//                        Text(text = "Editar")
-//                    }
-//                }
                     }
+                }
             }
         }
     }
