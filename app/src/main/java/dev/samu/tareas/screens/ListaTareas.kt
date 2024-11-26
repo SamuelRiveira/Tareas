@@ -111,7 +111,7 @@ fun ListaTareas(navController: NavHostController, taskViewModel: TaskViewModel) 
         }
 
         BottomAppBar(
-            modifier = Modifier.align(Alignment.BottomCenter),
+            modifier = Modifier.align(Alignment.BottomCenter).background(Color.Black).height(100.dp),
             actions = {
                 IconButton(onClick = { /* do something */ }) {
                     Icon(Icons.Filled.Check, contentDescription = "Localized description")
