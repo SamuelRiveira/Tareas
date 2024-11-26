@@ -10,16 +10,21 @@ import androidx.navigation.navArgument
 import dev.samu.tareas.data.AppDatabase
 import dev.samu.tareas.screens.ListaTareas
 import dev.samu.tareas.screens.Tarea
+import dev.samu.tareas.screens.TipoTarea
 import dev.samu.tareas.viewmodel.TaskViewModel
+import dev.samu.tareas.viewmodel.TypeTaskViewModel
 
 @Composable
-fun AppNavigation(modifier: Modifier, taskViewModel: TaskViewModel, database: AppDatabase){
+fun AppNavigation(modifier: Modifier, taskViewModel: TaskViewModel, typeTaskViewModel: TypeTaskViewModel, database: AppDatabase){
     // estado de gestion de navegación
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = AppScreens.ListaTareas.route) {
         composable(route = AppScreens.ListaTareas.route) {
             ListaTareas(navController, taskViewModel)
+        }
+        composable(route = AppScreens.ListaTareas.route) {
+            TipoTarea(navController, typeTaskViewModel)
         }
         composable(route = AppScreens.Tarea.route + "/{text}",
             arguments = listOf(navArgument(name = "text"){
