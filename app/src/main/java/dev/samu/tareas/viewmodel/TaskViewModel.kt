@@ -30,21 +30,21 @@ class TaskViewModel(application: Application) : AndroidViewModel(application) {
     fun addTask(newTask: Task) {
         viewModelScope.launch {
             database.taskDao().insert(newTask)
-            loadTasksFromDatabase() // Refresca la lista
+            loadTasksFromDatabase()
         }
     }
 
     fun updateTask(updatedTask: Task) {
         viewModelScope.launch {
             database.taskDao().update(updatedTask)
-            loadTasksFromDatabase() // Refresca la lista
+            loadTasksFromDatabase()
         }
     }
 
     fun deleteTask(taskToDelete: Task) {
         viewModelScope.launch {
             database.taskDao().delete(taskToDelete)
-            loadTasksFromDatabase() // Refresca la lista
+            loadTasksFromDatabase()
         }
     }
 }

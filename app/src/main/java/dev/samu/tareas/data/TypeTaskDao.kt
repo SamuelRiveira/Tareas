@@ -1,24 +1,18 @@
 package dev.samu.tareas.data
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 
 @Dao
-interface TipoTareaDao {
-
+interface TypeTaskDao {
     @Insert
-    suspend fun insertTipoTarea(tipoTarea: TipoTarea)
+    suspend fun insert(typeTask: TypeTask)
+
+    @Query("SELECT * FROM type_tasks")
+    suspend fun getAllTypeTasks(): List<TypeTask>
 
     @Update
-    suspend fun update(tipoTarea: TipoTarea)
+    suspend fun update(typeTask: TypeTask)
 
     @Delete
-    suspend fun delete(tipoTarea: TipoTarea)
-
-    @Query("SELECT * FROM TiposTareas")
-    suspend fun getAllTipos(): List<TipoTarea>
-
+    suspend fun delete(typeTask: TypeTask)
 }
