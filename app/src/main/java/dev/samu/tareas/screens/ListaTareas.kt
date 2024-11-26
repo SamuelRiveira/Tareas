@@ -120,7 +120,7 @@ fun ListaTareas(navController: NavHostController, taskViewModel: TaskViewModel) 
             actions = {
                 NavigationBarItem(
                     icon = { Icon(Icons.Filled.Edit, "Tareas", tint = Color.White) },
-                    label = { Text("Tareas") },
+                    label = { Text("Tareas", color = Color.White) },
                     selected = currentRoute == AppScreens.ListaTareas.route,
                     onClick = {
                         if (currentRoute != AppScreens.ListaTareas.route) {
@@ -136,7 +136,7 @@ fun ListaTareas(navController: NavHostController, taskViewModel: TaskViewModel) 
                 )
                 NavigationBarItem(
                     icon = { Icon(Icons.Filled.Info, "Tipos", tint = Color.White) },
-                    label = { Text("Tipos") },
+                    label = { Text("Tipos", color = Color.White) },
                     selected = currentRoute == AppScreens.TipoTarea.route,
                     onClick = {
                         if (currentRoute != AppScreens.TipoTarea.route) {

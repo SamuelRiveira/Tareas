@@ -49,7 +49,7 @@ fun TipoTarea(navController: NavHostController, typeTaskViewModel: TypeTaskViewM
             actions = {
                 NavigationBarItem(
                     icon = { Icon(Icons.Filled.Edit, "Tareas", tint = Color.White) },
-                    label = { Text("Tareas") },
+                    label = { Text("Tareas", color = Color.White) },
                     selected = currentRoute?.startsWith(AppScreens.ListaTareas.route) == true,
                     onClick = {
                         if (currentRoute != AppScreens.ListaTareas.route) {
@@ -65,7 +65,7 @@ fun TipoTarea(navController: NavHostController, typeTaskViewModel: TypeTaskViewM
                 )
                 NavigationBarItem(
                     icon = { Icon(Icons.Filled.Info, "Tipos", tint = Color.White) },
-                    label = { Text("Tipos") },
+                    label = { Text("Tipos", color = Color.White) },
                     selected = currentRoute == AppScreens.TipoTarea.route,
                     onClick = {
                         if (currentRoute != AppScreens.TipoTarea.route) {
