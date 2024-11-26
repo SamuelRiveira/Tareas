@@ -112,7 +112,9 @@ fun ListaTareas(navController: NavHostController, taskViewModel: TaskViewModel) 
         }
 
         BottomAppBar(
-            modifier = Modifier.align(Alignment.BottomCenter).background(Color.Black).height(100.dp),
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .height(100.dp),
             actions = {
                 IconButton(onClick = { /* do something */ }) {
                     Icon(
@@ -129,7 +131,7 @@ fun ListaTareas(navController: NavHostController, taskViewModel: TaskViewModel) 
                     )
                 }
             },
-            containerColor = Color.Black
+            containerColor = Color(0xff242424)
         )
     }
 }
