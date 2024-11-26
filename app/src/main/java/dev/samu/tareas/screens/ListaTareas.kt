@@ -12,16 +12,13 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -115,6 +112,7 @@ fun ListaTareas(navController: NavHostController, taskViewModel: TaskViewModel) 
             Icon(Icons.Filled.Add, contentDescription = "Crear")
         }
         val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
+
         BottomAppBar(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
@@ -123,11 +121,13 @@ fun ListaTareas(navController: NavHostController, taskViewModel: TaskViewModel) 
                 NavigationBarItem(
                     icon = { Icon(Icons.Filled.Edit, "Tareas", tint = Color.White) },
                     label = { Text("Tareas") },
-                    selected = currentRoute == "tareas",
+                    selected = currentRoute == AppScreens.ListaTareas.route,
                     onClick = {
-                        if (currentRoute != "tareas") {
-                            navController.navigate("tareas") {
-                                popUpTo(navController.graph.startDestinationId) { saveState = true }
+                        if (currentRoute != AppScreens.ListaTareas.route) {
+                            navController.navigate(AppScreens.ListaTareas.route) {
+                                popUpTo(navController.graph.startDestinationId) {
+                                    saveState = true
+                                }
                                 launchSingleTop = true
                                 restoreState = true
                             }
@@ -137,10 +137,10 @@ fun ListaTareas(navController: NavHostController, taskViewModel: TaskViewModel) 
                 NavigationBarItem(
                     icon = { Icon(Icons.Filled.Info, "Tipos", tint = Color.White) },
                     label = { Text("Tipos") },
-                    selected = currentRoute == "tipos",
+                    selected = currentRoute == AppScreens.TipoTarea.route,
                     onClick = {
-                        if (currentRoute != "tipos") {
-                            navController.navigate("tipos") {
+                        if (currentRoute != AppScreens.TipoTarea.route) {
+                            navController.navigate(AppScreens.TipoTarea.route) {
                                 popUpTo(navController.graph.startDestinationId) { saveState = true }
                                 launchSingleTop = true
                                 restoreState = true
