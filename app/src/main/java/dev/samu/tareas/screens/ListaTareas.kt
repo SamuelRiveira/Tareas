@@ -54,21 +54,6 @@ fun ListaTareas(navController: NavHostController, taskViewModel: TaskViewModel) 
             ) {
                 itemsIndexed(taskViewModel.task) { index,task ->
                     indiceTarea = index
-//                    Column(modifier = Modifier.fillMaxWidth().padding(8.dp)) {
-//                        Text(text = "Título: ${task.title}")
-//                        Text(text = "Contenido: ${task.content}")
-//                        Row {
-//                            Button(onClick = { taskViewModel.deleteTask(task) }) {
-//                                Text(text = "Eliminar")
-//                            }
-//                            Button(onClick = {
-//                                val updatedTask = task.copy(content = "Contenido actualizado")
-//                                taskViewModel.updateTask(updatedTask)
-//                            }) {
-//                                Text(text = "Editar")
-//                            }
-//                        }
-//                    }
                     Column(modifier = Modifier){
                         Card(
                             modifier = Modifier
