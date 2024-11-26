@@ -1,5 +1,6 @@
 package dev.samu.tareas.navigation
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavType
@@ -21,9 +22,10 @@ fun AppNavigation(modifier: Modifier, taskViewModel: TaskViewModel, typeTaskView
 
     NavHost(navController = navController, startDestination = AppScreens.ListaTareas.route) {
         composable(route = AppScreens.ListaTareas.route) {
+            Log.d("Prueba", "Lleva a la ruta")
             ListaTareas(navController, taskViewModel)
         }
-        composable(route = AppScreens.ListaTareas.route) {
+        composable(route = AppScreens.TipoTarea.route) {
             TipoTarea(navController, typeTaskViewModel)
         }
         composable(route = AppScreens.Tarea.route + "/{text}",
