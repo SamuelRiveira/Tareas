@@ -115,15 +115,21 @@ fun ListaTareas(navController: NavHostController, taskViewModel: TaskViewModel) 
             modifier = Modifier.align(Alignment.BottomCenter).background(Color.Black).height(100.dp),
             actions = {
                 IconButton(onClick = { /* do something */ }) {
-                    Icon(Icons.Filled.Check, contentDescription = "Localized description")
+                    Icon(
+                        Icons.Filled.Check,
+                        contentDescription = "Localized description",
+                        tint = Color.White
+                    )
                 }
                 IconButton(onClick = { /* do something */ }) {
                     Icon(
                         Icons.Filled.Edit,
                         contentDescription = "Localized description",
+                        tint = Color.White
                     )
                 }
-            }
+            },
+            containerColor = Color.Black
         )
     }
 }
