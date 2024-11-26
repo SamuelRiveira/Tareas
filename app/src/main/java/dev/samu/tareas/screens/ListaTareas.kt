@@ -105,7 +105,8 @@ fun ListaTareas(navController: NavHostController, taskViewModel: TaskViewModel) 
             contentColor = Color.White,
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .padding(24.dp)
+                .padding(45.dp)
+                .padding(bottom = 95.dp)
         ) {
             Icon(Icons.Filled.Add, contentDescription = "Crear")
         }
