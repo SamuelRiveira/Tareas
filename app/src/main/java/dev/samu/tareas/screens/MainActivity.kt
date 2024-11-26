@@ -13,6 +13,7 @@ import dev.samu.tareas.data.AppDatabase
 import dev.samu.tareas.navigation.AppNavigation
 import dev.samu.tareas.ui.theme.TareasTheme
 import dev.samu.tareas.viewmodel.TaskViewModel
+import dev.samu.tareas.viewmodel.TypeTaskViewModel
 
 class MainActivity : ComponentActivity() {
 
@@ -22,6 +23,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         database = AppDatabase.Companion.getDatabase(this)
         val taskViewModel by viewModels<TaskViewModel>()
+        val typeTaskViewModel by viewModels<TypeTaskViewModel>()
         enableEdgeToEdge()
         setContent {
             TareasTheme {
@@ -29,6 +31,7 @@ class MainActivity : ComponentActivity() {
                     AppNavigation(
                         modifier = Modifier.padding(innerPadding),
                         taskViewModel,
+                        typeTaskViewModel,
                         database
                     )
                 }
