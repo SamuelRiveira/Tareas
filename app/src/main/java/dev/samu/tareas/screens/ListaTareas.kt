@@ -14,12 +14,15 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -33,6 +36,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import dev.samu.tareas.data.Task
 import dev.samu.tareas.navigation.AppScreens
 import dev.samu.tareas.viewmodel.TaskViewModel
@@ -110,26 +114,40 @@ fun ListaTareas(navController: NavHostController, taskViewModel: TaskViewModel) 
         ) {
             Icon(Icons.Filled.Add, contentDescription = "Crear")
         }
-
+        val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
         BottomAppBar(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .height(100.dp),
             actions = {
-                IconButton(onClick = { /* do something */ }) {
-                    Icon(
-                        Icons.Filled.Check,
-                        contentDescription = "Localized description",
-                        tint = Color.White
-                    )
-                }
-                IconButton(onClick = { /* do something */ }) {
-                    Icon(
-                        Icons.Filled.Edit,
-                        contentDescription = "Localized description",
-                        tint = Color.White
-                    )
-                }
+                NavigationBarItem(
+                    icon = { Icon(Icons.Filled.Edit, "Tareas", tint = Color.White) },
+                    label = { Text("Tareas") },
+                    selected = currentRoute == "tareas",
+                    onClick = {
+                        if (currentRoute != "tareas") {
+                            navController.navigate("tareas") {
+                                popUpTo(navController.graph.startDestinationId) { saveState = true }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
+                        }
+                    }
+                )
+                NavigationBarItem(
+                    icon = { Icon(Icons.Filled.Info, "Tipos", tint = Color.White) },
+                    label = { Text("Tipos") },
+                    selected = currentRoute == "tipos",
+                    onClick = {
+                        if (currentRoute != "tipos") {
+                            navController.navigate("tipos") {
+                                popUpTo(navController.graph.startDestinationId) { saveState = true }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
+                        }
+                    }
+                )
             },
             containerColor = Color(0xff242424)
         )
