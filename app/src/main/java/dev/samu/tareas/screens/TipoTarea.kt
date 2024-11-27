@@ -1,5 +1,6 @@
 package dev.samu.tareas.screens
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -44,6 +45,7 @@ fun TipoTarea(navController: NavHostController, typeTaskViewModel: TypeTaskViewM
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
     var textoTitulo by remember { mutableStateOf("Tipo") }
     var expanded by remember { mutableStateOf(false) }
+    var indice by remember { mutableStateOf(0) }
 
     Box(
         modifier = Modifier
@@ -62,6 +64,23 @@ fun TipoTarea(navController: NavHostController, typeTaskViewModel: TypeTaskViewM
                         value = textoTitulo,
                         onValueChange = { textoTitulo = it }
                     )
+                    DropdownMenu(
+                        expanded = expanded,
+                        onDismissRequest = { expanded = false }
+                    ){
+                        typeTaskViewModel.typeTaskList.forEachIndexed { index, tipo ->
+                            DropdownMenuItem(
+                                text = {
+                                    Text(text = "${tipo.name}")
+                                },
+                                onClick = {
+                                    expanded = false
+                                    textoTitulo = tipo.name
+                                }
+                            )
+                            indice = index
+                        }
+                    }
                     Button(
                         onClick = {
                             expanded = true
@@ -71,25 +90,31 @@ fun TipoTarea(navController: NavHostController, typeTaskViewModel: TypeTaskViewM
                         Text(text = "ver tipos")
                     }
                 }
-                Row {
-                    Button(onClick = {}, modifier = Modifier.padding(start = 10.dp)) { Text(text = "Añadir tipo") }
-                    Button(onClick = {}, modifier = Modifier.padding(start = 10.dp)) { Text(text = "Eliminar tipo") }
-                    Button(onClick = {}, modifier = Modifier.padding(start = 10.dp)) { Text(text = "Editar tipo") }
-                }
-                DropdownMenu(
-                    expanded = expanded,
-                    onDismissRequest = { expanded = false }
-                ){
-                    typeTaskViewModel.typeTaskList.forEach { tipo ->
-                        DropdownMenuItem(
-                            text = {
-                                Text(text = "${tipo.name}")
-                            },
-                            onClick = {
-                                expanded = false
+                Row(modifier = Modifier.padding(top = 16.dp)) {
+                    Button(
+                        onClick = {
+
+                        }, 
+                        modifier = Modifier
+                            .padding(start = 10.dp)
+                    ) { Text(text = "Añadir tipo") }
+                    Button(
+                        onClick = {
+                            typeTaskViewModel.typeTaskList.forEachIndexed{ index, tipo ->
+                                Log.i("prueba", "entra: index $index indice $indice tipo $tipo")
+                                typeTaskViewModel.deleteTypeTask(tipo)
                             }
-                        )
-                    }
+                        }, 
+                        modifier = Modifier
+                            .padding(start = 10.dp)
+                    ) { Text(text = "Eliminar tipo") }
+                    Button(
+                        onClick = {
+                            
+                        }, 
+                        modifier = Modifier
+                            .padding(start = 10.dp)
+                    ) { Text(text = "Editar tipo") }
                 }
             }
         }
