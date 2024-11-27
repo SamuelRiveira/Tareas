@@ -93,7 +93,7 @@ fun TipoTarea(navController: NavHostController, typeTaskViewModel: TypeTaskViewM
                 Row(modifier = Modifier.padding(top = 16.dp)) {
                     Button(
                         onClick = {
-
+                            typeTaskViewModel.addTypeTask(TypeTask(name = textoTitulo))
                         }, 
                         modifier = Modifier
                             .padding(start = 10.dp)
