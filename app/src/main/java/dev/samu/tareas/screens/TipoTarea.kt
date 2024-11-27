@@ -101,8 +101,10 @@ fun TipoTarea(navController: NavHostController, typeTaskViewModel: TypeTaskViewM
                     Button(
                         onClick = {
                             typeTaskViewModel.typeTaskList.forEachIndexed{ index, tipo ->
-                                Log.i("prueba", "entra: index $index indice $indice tipo $tipo")
-                                typeTaskViewModel.deleteTypeTask(tipo)
+                                if (indice == index){
+                                    Log.i("prueba", "entra: index $index indice $indice tipo $tipo")
+                                    typeTaskViewModel.deleteTypeTask(tipo)
+                                }
                             }
                         }, 
                         modifier = Modifier
