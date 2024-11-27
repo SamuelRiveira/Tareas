@@ -53,13 +53,7 @@ fun TipoTarea(navController: NavHostController, typeTaskViewModel: TypeTaskViewM
                     selected = currentRoute?.startsWith(AppScreens.ListaTareas.route) == true,
                     onClick = {
                         if (currentRoute != AppScreens.ListaTareas.route) {
-                            navController.navigate(AppScreens.ListaTareas.route) {
-                                popUpTo(navController.graph.startDestinationId) {
-                                    saveState = true
-                                }
-                                launchSingleTop = true
-                                restoreState = true
-                            }
+                            navController.navigate(AppScreens.ListaTareas.route)
                         }
                     }
                 )
@@ -69,13 +63,7 @@ fun TipoTarea(navController: NavHostController, typeTaskViewModel: TypeTaskViewM
                     selected = currentRoute == AppScreens.TipoTarea.route,
                     onClick = {
                         if (currentRoute != AppScreens.TipoTarea.route) {
-                            navController.navigate(AppScreens.TipoTarea.route) {
-                                popUpTo(navController.graph.startDestinationId) {
-                                    saveState = true
-                                }
-                                launchSingleTop = true
-                                restoreState = true
-                            }
+                            navController.navigate(AppScreens.TipoTarea.route)
                         }
                     }
                 )

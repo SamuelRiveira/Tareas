@@ -124,13 +124,7 @@ fun ListaTareas(navController: NavHostController, taskViewModel: TaskViewModel) 
                     selected = currentRoute == AppScreens.ListaTareas.route,
                     onClick = {
                         if (currentRoute != AppScreens.ListaTareas.route) {
-                            navController.navigate(AppScreens.ListaTareas.route) {
-                                popUpTo(navController.graph.startDestinationId) {
-                                    saveState = true
-                                }
-                                launchSingleTop = true
-                                restoreState = true
-                            }
+                            navController.navigate(AppScreens.ListaTareas.route)
                         }
                     }
                 )
@@ -140,11 +134,7 @@ fun ListaTareas(navController: NavHostController, taskViewModel: TaskViewModel) 
                     selected = currentRoute == AppScreens.TipoTarea.route,
                     onClick = {
                         if (currentRoute != AppScreens.TipoTarea.route) {
-                            navController.navigate(AppScreens.TipoTarea.route) {
-                                popUpTo(navController.graph.startDestinationId) { saveState = true }
-                                launchSingleTop = true
-                                restoreState = true
-                            }
+                            navController.navigate(AppScreens.TipoTarea.route)
                         }
                     }
                 )
