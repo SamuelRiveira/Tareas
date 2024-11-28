@@ -33,7 +33,9 @@ fun AppNavigation(modifier: Modifier, taskViewModel: TaskViewModel, typeTaskView
                 type = NavType.IntType
             }
             )) {
-            Tarea(navController, taskViewModel, it.arguments?.getInt("text"))
+            Tarea(
+                navController, taskViewModel, typeTaskViewModel
+            )
         }
     }
 }

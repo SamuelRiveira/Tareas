@@ -10,20 +10,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -33,15 +22,23 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import dev.samu.tareas.viewmodel.TaskViewModel
+import dev.samu.tareas.viewmodel.TypeTaskViewModel
 import dev.samu.tareas.R
 import dev.samu.tareas.navigation.AppScreens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Tarea(navController: NavHostController, taskViewModel: TaskViewModel, indice: Int?) {
+fun Tarea(navController: NavHostController, taskViewModel: TaskViewModel, typeTaskViewModel: TypeTaskViewModel, indice: Int? = 0) {
+
+    // Obtén la tarea seleccionada
     val selectedTask = indice?.let { taskViewModel.task.getOrNull(it) }
     var textoTitulo by remember { mutableStateOf(selectedTask?.title ?: "") }
     var textoContenido by remember { mutableStateOf(selectedTask?.content ?: "") }
+
+    // Obtener la lista de tipos de tarea desde el ViewModel
+    val tiposTareas = typeTaskViewModel.typeTaskList
+    var tipoSeleccionado by remember { mutableStateOf(tiposTareas.getOrNull(selectedTask?.typeTaskId ?: 0)?.name ?: "") }
+    var expanded by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -84,7 +81,11 @@ fun Tarea(navController: NavHostController, taskViewModel: TaskViewModel, indice
                 }
                 IconButton(onClick = {
                     selectedTask?.let { task ->
-                        val updatedTask = task.copy(title = textoTitulo, content = textoContenido)
+                        val updatedTask = task.copy(
+                            title = textoTitulo,
+                            content = textoContenido,
+                            typeTaskId = tiposTareas.indexOfFirst { it.name == tipoSeleccionado }
+                        )
                         taskViewModel.updateTask(updatedTask)
                         navController.popBackStack()
                     }
@@ -134,6 +135,46 @@ fun Tarea(navController: NavHostController, taskViewModel: TaskViewModel, indice
                                 unfocusedIndicatorColor = Color.Transparent
                             ),
                         )
+                        OutlinedTextField(
+                            value = tipoSeleccionado,
+                            onValueChange = { tipoSeleccionado = it },
+                            label = { Text("Tipo de Tarea") },
+                            readOnly = true,
+                            trailingIcon = {
+                                IconButton(onClick = { expanded = !expanded }) {
+                                    Icon(Icons.Filled.ArrowBack, contentDescription = "Expandir")
+                                }
+                            },
+                            colors = TextFieldDefaults.outlinedTextFieldColors(
+                                containerColor = Color.Black,
+                                focusedBorderColor = Color.White,
+                                unfocusedBorderColor = Color.Gray,
+                                focusedLabelColor = Color.White,
+                                unfocusedLabelColor = Color.Gray
+                            ),
+                            modifier = Modifier.fillMaxWidth()
+                        )
+
+                        // Mostrar el DropdownMenu
+                        DropdownMenu(
+                            expanded = expanded,
+                            onDismissRequest = { expanded = false }
+                        ) {
+                            tiposTareas.forEach { tipo ->
+                                DropdownMenuItem(
+                                    onClick = {
+                                        tipoSeleccionado = tipo.name
+                                        expanded = false
+                                    },
+                                    text = {
+                                        Text(
+                                            text = tipo.name,
+                                            color = Color.Black
+                                        )
+                                    }
+                                )
+                            }
+                        }
                     }
                 }
             }

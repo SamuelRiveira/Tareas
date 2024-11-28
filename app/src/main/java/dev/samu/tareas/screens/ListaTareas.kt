@@ -99,7 +99,7 @@ fun ListaTareas(navController: NavHostController, taskViewModel: TaskViewModel) 
 
         FloatingActionButton(
             onClick = {
-                taskViewModel.addTask(Task(title = "Nueva Tarea", content = ""))
+                taskViewModel.addTask(Task(title = "Nueva Tarea", content = "", typeTaskId = 1))
                 navController.navigate(route = AppScreens.Tarea.route + "/${indiceTarea + 1}")
             },
             containerColor = Color(0xffFFA500),
