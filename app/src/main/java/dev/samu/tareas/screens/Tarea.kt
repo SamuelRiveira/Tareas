@@ -37,7 +37,11 @@ fun Tarea(navController: NavHostController, taskViewModel: TaskViewModel, typeTa
 
     // Obtener la lista de tipos de tarea desde el ViewModel
     val tiposTareas = typeTaskViewModel.typeTaskList
-    var tipoSeleccionado by remember { mutableStateOf(tiposTareas.getOrNull(selectedTask?.typeTaskId ?: 0)?.name ?: "") }
+
+    val tipoTareaId = selectedTask?.typeTaskId ?: 0
+    val tipoTareaSeleccionado = tiposTareas.getOrNull(tipoTareaId)?.name
+    var tipoSeleccionado by remember { mutableStateOf(tipoTareaSeleccionado ?: "") }
+
     var expanded by remember { mutableStateOf(false) }
 
     Column(
@@ -138,7 +142,7 @@ fun Tarea(navController: NavHostController, taskViewModel: TaskViewModel, typeTa
                         OutlinedTextField(
                             value = tipoSeleccionado,
                             onValueChange = { tipoSeleccionado = it },
-                            label = { Text("Tipo de Tarea") },
+                            label = { Text("Tipo de Tarea", color = Color(0xff828282)) },
                             readOnly = true,
                             trailingIcon = {
                                 IconButton(onClick = { expanded = !expanded }) {
@@ -146,11 +150,10 @@ fun Tarea(navController: NavHostController, taskViewModel: TaskViewModel, typeTa
                                 }
                             },
                             colors = TextFieldDefaults.outlinedTextFieldColors(
-                                containerColor = Color.Black,
-                                focusedBorderColor = Color.White,
-                                unfocusedBorderColor = Color.Gray,
-                                focusedLabelColor = Color.White,
-                                unfocusedLabelColor = Color.Gray
+                                containerColor = Color.Black
+                            ),
+                            textStyle = TextStyle(
+                                color = Color.White
                             ),
                             modifier = Modifier.fillMaxWidth()
                         )
