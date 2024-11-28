@@ -32,9 +32,10 @@ fun AppNavigation(modifier: Modifier, taskViewModel: TaskViewModel, typeTaskView
             arguments = listOf(navArgument(name = "text"){
                 type = NavType.IntType
             }
-            )) {
+            )) {nuevoIndice ->
+            val indiceParametro = nuevoIndice.arguments?.getInt("text") ?: 0
             Tarea(
-                navController, taskViewModel, typeTaskViewModel
+                navController, taskViewModel, typeTaskViewModel, indiceParametro
             )
         }
     }

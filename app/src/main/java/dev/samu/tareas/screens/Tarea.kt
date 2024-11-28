@@ -28,7 +28,7 @@ import dev.samu.tareas.navigation.AppScreens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Tarea(navController: NavHostController, taskViewModel: TaskViewModel, typeTaskViewModel: TypeTaskViewModel, indice: Int? = 0) {
+fun Tarea(navController: NavHostController, taskViewModel: TaskViewModel, typeTaskViewModel: TypeTaskViewModel, indice: Int?) {
 
     // Obtén la tarea seleccionada
     val selectedTask = indice?.let { taskViewModel.task.getOrNull(it) }
